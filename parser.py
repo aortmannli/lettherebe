@@ -22,11 +22,11 @@ The file follows the following format:
          box: add a rectangular prism to the POLYGON matrix -
               takes 6 arguemnts (x, y, z, width, height, depth)
          clear: clears the edge and POLYGON matrices
-	 circle: add a circle to the edge matrix -
+	     circle: add a circle to the edge matrix -
 	         takes 4 arguments (cx, cy, cz, r)
-	 hermite: add a hermite curve to the edge matrix -
+	     hermite: add a hermite curve to the edge matrix -
 	          takes 8 arguments (x0, y0, x1, y1, rx0, ry0, rx1, ry1)
-	 bezier: add a bezier curve to the edge matrix -
+	     bezier: add a bezier curve to the edge matrix -
 	         takes 8 arguments (x0, y0, x1, y1, x2, y2, x3, y3)
          line: add a line to the edge matrix -
                takes 6 arguemnts (x0, y0, z0, x1, y1, z1)
@@ -51,9 +51,9 @@ The file follows the following format:
          quit: end parsing
 See the file script for an example of the file format
 """
-ARG_COMMANDS = [ 'box', 'sphere', 'torus', 'circle', 'bezier', 'hermite', 'line', 'scale', 'move', 'rotate', 'save' ]
+ARG_COMMANDS = [ 'box', 'sphere', 'torus', 'circle', 'bezier', 'hermite', 'line', 'scale', 'move', 'rotate', 'save', 'color' ]
 
-def parse_file( fname, edges, polygons, csystems, screen, zbuffer, color,view, ambient, light, areflect, dreflect, sreflect):
+def parse_file( fname, edges, polygons, csystems, screen, zbuffer, color, view, ambient, light, areflect, dreflect, sreflect):
 
     f = open(fname)
     lines = f.readlines()
@@ -61,7 +61,7 @@ def parse_file( fname, edges, polygons, csystems, screen, zbuffer, color,view, a
     clear_screen(screen)
     clear_zbuffer(zbuffer)
     step = 100
-    step_3d = 20
+    step_3d = 50
 
     c = 0
     while c < len(lines):

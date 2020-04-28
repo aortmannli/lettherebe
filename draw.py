@@ -91,6 +91,7 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, areflect, dr
 
             color = get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect )
             scanline_convert(polygons, point, screen, zbuffer, color)
+
             # draw_line( int(polygons[point][0]),
             #            int(polygons[point][1]),
             #            polygons[point][2],

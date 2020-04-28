@@ -51,7 +51,6 @@ def save_ppm( screen, fname ):
     for y in range( len(screen) ):
         for x in range( len(screen[y]) ):
             pixel = screen[y][x]
-            #print(pixel)
             f.write( bytes(pixel) )
     f.close()
 

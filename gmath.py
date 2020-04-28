@@ -22,6 +22,7 @@ SPECULAR_EXP = 4
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
+    #print(light)
     normalize(normal)
     normalize(light[LOCATION])
     normalize(view)
@@ -34,10 +35,17 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     g = ambient[1] + diffuse[1] + specular[1]
     b = ambient[2] + diffuse[2] + specular[2]
 
-    return limit_color([r,g,b])
+    #print([r, g, b])
+    return limit_color([r, g, b])
 
 def calculate_ambient(alight, areflect):
-    return vector_mult(alight, areflect)
+    r = alight[0] * areflect[0]
+    g = alight[1] * areflect[1]
+    b = alight[2] * areflect[2]
+
+    ambient = [r, g, b]
+    #print(ambient)
+    return limit_color(ambient)
 
 def calculate_diffuse(light, dreflect, normal):
     color = dot_product(normal, light[LOCATION])
@@ -46,53 +54,38 @@ def calculate_diffuse(light, dreflect, normal):
     g = light[COLOR][1] * dreflect[1] * color
     b = light[COLOR][2] * dreflect[2] * color
 
-    return limit_color([r, g, b])
+    diffuse = [r, g, b]
+
+    return limit_color(diffuse)
 
 def calculate_specular(light, sreflect, view, normal):
-    normalize(light[0])
-    normalize(normal)
-    t = scale(normal, 2 * dot_product(light[0], normal))
-    s = dot_product(matrix_subtraction(t, light[0]), view)
-    s = s ** 2
-    out = scale(sreflect, s)
-    return vector_mult(light[1], out)
+    cos = 2 * dot_product(light[LOCATION],normal)
+    rnorm = [normal[0] * cos - light[LOCATION][0], normal[1] * cos - light[LOCATION][1], normal[2] * cos - light[LOCATION][2]]
+    spec = dot_product(rnorm, view)
+
+    if spec <= 0:
+        return [0,0,0]
+
+    spec = spec ** SPECULAR_EXP
+
+    r = light[COLOR][0] * sreflect[0] * spec
+    g = light[COLOR][1] * sreflect[1] * spec
+    b = light[COLOR][2] * sreflect[2] * spec
+
+    specular = [r, g, b]
+
+    return limit_color(specular)
+
 
 def limit_color(color):
-    if color > 255:
-        return 255
-    elif color < 0:
-        return 0
+    for i in range(3):
+        color[i] = int(color[i])
+        if color[i] > 255:
+            color[i] = 255
+        if color[i] < 0:
+            color[i] = 0
     return color
 
-def vector_mult(a, b):
-    out = []
-    i = 0
-    while i < len(a):
-        out.append(a[i] * b[i])
-        i += 1
-    return out
-def matrix_addition(a, b):
-    out = []
-    i = 0
-    while i < len(a):
-        out.append(a[i] + b[i])
-        i += 1
-    return out
-
-def matrix_subtraction(a, b):
-    out = []
-    i = 0
-    while i < len(a):
-        out.append(a[i] - b[i])
-        i += 1
-    return out
-def scale(vector, scalar):
-    out = []
-    i = 0
-    while i < len(vector):
-        out.append(vector[i] * scalar)
-        i += 1
-    return out
 #vector functions
 #normalize vetor, should modify the parameter
 def normalize(vector):

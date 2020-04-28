@@ -6,18 +6,19 @@ import math
 
 
 # lighting values
-view = [0,0,1]
-ambient = [50,50,50]
-light = [[0.5,0.75,1],[0,255,255]]
-areflect = [0.1,0.1,0.1]
-dreflect = [0.5,0.5,0.5]
-sreflect = [0.5,0.5,0.5]
+view = [100, 0, 1];
+ambient = [246, 51, 168]
+light = [[0.5, 0.75, 1],
+         [246, 51, 168]]
+areflect = [0.1, 0.1, 0.1]
+dreflect = [0.5, 0.5, 0.5]
+sreflect = [0.5, 0.5, 0.5]
 
 
 
 screen = new_screen()
 zbuffer = new_zbuffer()
-color = [ 0, 255, 0 ]
+color = [0, 0, 0]
 edges = []
 polygons = []
 t = new_matrix()
