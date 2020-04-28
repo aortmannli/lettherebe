@@ -58,10 +58,12 @@ def calculate_specular(light, sreflect, view, normal):
     return vector_mult(light[1], out)
 
 def limit_color(color):
-    if color > 255:
-        return 255
-    elif color < 0:
-        return 0
+    for i in range(3):
+        color[i] = int(color[i])
+        if color[i] > 255:
+            color[i] = 255
+        if color[i] <0:
+            color[i] = 0
     return color
 
 def vector_mult(a, b):
